@@ -1,5 +1,6 @@
 <div>Teachable Machine Image Model</div>
 <button type="button" onclick="init()">Start</button>
+<button type = "button" onclick = "canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height)">test</button>
 <div id="webcam-container"></div>
 <div id="label-container"></div>
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
@@ -26,12 +27,24 @@
         maxPredictions = model.getTotalClasses();
 
         // Convenience function to setup a webcam
-        const flip = false; // whether to flip the webcam
+        /*const flip = false; // whether to flip the webcam
         webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
         await webcam.setup(); // request access to the webcam
         await webcam.play();
-        window.requestAnimationFrame(loop);
-
+        window.requestAnimationFrame(loop);*/
+        
+        if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
+            console.log("Let's get this party started")
+        }navigator.mediaDevices.getUserMedia(constraints)
+        const constraints = {
+                video: {
+                    width: 200,
+                    height: 200,
+                }facingMode: {
+                    exact: 'environment'
+                }
+            }
+        
         // append elements to the DOM
         document.getElementById("webcam-container").appendChild(webcam.canvas);
         labelContainer = document.getElementById("label-container");
@@ -49,7 +62,7 @@
     // run the webcam image through the image model
     async function predict() {
         // predict can take in an image, video or canvas html element
-        const prediction = await model.predict(webcam.canvas);
+        const prediction = await model.predict(video);
         for (let i = 0; i < maxPredictions; i++) {
             const classPrediction =
                 prediction[i].className + ": " + prediction[i].probability.toFixed(2);
