@@ -43,7 +43,10 @@
             }
         if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
             console.log("Let's get this party started")
-        }navigator.mediaDevices.getUserMedia(constraints)
+        }navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
+        video.srcObject = stream;
+        video.play();
+    })
         
         
         // append elements to the DOM
