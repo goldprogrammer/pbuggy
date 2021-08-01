@@ -22,9 +22,14 @@ button.onclick = function() {
 };
 
 const constraints = {
-  audio: false,
-  video: true
-};
+                video: {
+                    width: 200,
+                    height: 200,
+                    facingMode: {
+                        exact: 'environment'
+                    }
+                }
+            }
 
 function handleSuccess(stream) {
   window.stream = stream; // make stream available to browser console
