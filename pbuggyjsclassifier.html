@@ -32,10 +32,6 @@
         await webcam.setup(); // request access to the webcam
         await webcam.play();
         window.requestAnimationFrame(loop);*/
-        
-        if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-            console.log("Let's get this party started")
-        }navigator.mediaDevices.getUserMedia(constraints)
         const constraints = {
                 video: {
                     width: 200,
@@ -44,9 +40,13 @@
                     exact: 'environment'
                 }
             }
+        if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
+            console.log("Let's get this party started")
+        }navigator.mediaDevices.getUserMedia(constraints)
+        
         
         // append elements to the DOM
-        document.getElementById("webcam-container").appendChild(webcam.canvas);
+        // document.getElementById("webcam-container").appendChild(vid);
         labelContainer = document.getElementById("label-container");
         for (let i = 0; i < maxPredictions; i++) { // and class labels
             labelContainer.appendChild(document.createElement("div"));
